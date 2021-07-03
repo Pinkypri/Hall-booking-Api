@@ -138,6 +138,7 @@ router.post("/book", async (req, res) => {
     router.get("/all/customers",async(req,res)=>{
         try {
             const user=await User.find({}).populate({path:"bookingDetails",select:"name location seats price amentities -_id"})
+            .select("-__v -_id  -createdAt -updatedAt");
             res.json(user);
         } catch (error) {
              res.json(error); 
@@ -147,7 +148,8 @@ router.post("/book", async (req, res) => {
 
     router.get("/all/rooms",async(req,res)=>{
         try {
-            const user=await Room.find({}).populate({path:"hall_booking",select:"customername date start end status -_id"});
+            const user=await Room.find({}).populate({path:"hall_booking",select:"customername date startTime endTime status -_id"})
+            .select("-__v -_id  -createdAt -updatedAt");
             res.json(user);
         } catch (error) {
             res.json(error);
